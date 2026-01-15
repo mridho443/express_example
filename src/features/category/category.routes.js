@@ -45,6 +45,22 @@ const router = express.Router();
  *   get:
  *     summary: Get all categories
  *     tags: [Categories]
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 10
+ *         description: Maximum number of categories to return
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *           default: 0
+ *         description: Number of categories to skip
  *     responses:
  *       200:
  *         description: List of categories

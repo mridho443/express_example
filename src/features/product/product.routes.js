@@ -59,6 +59,22 @@ const router = express.Router();
  *   get:
  *     summary: Get all products
  *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 10
+ *         description: Maximum number of products to return
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *           default: 0
+ *         description: Number of products to skip
  *     responses:
  *       200:
  *         description: List of products
