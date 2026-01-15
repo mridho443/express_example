@@ -7,8 +7,16 @@ const createCategory = async (categoryBody) => {
     return category;
 };
 
-const getCategories = () => {
-    return db.select().from(categories);
+const getCategories = async (options = {}) => {
+    const { limit = 10, offset = 0 } = options;
+    const results = await db.select().from(categories).limit(limit).offset(offset);
+    const [{ count }] = await db.select({ count: db.count() }).from(categories);
+    return {
+        results,
+        totalResults: Number(count),
+        limit,
+        offset,
+    };
 };
 
 const getCategoryById = async (id) => {
@@ -17,7 +25,7 @@ const getCategoryById = async (id) => {
 };
 
 const updateCategoryById = async (id, updateBody) => {
-    const [category] = await db.update(categories).set(updateBody).where(eq(categories.id, id)).returning();
+    const [category] = await db.update(categories).set({ ...updateBody, updatedAt: new Date() }).where(eq(categories.id, id)).returning();
     return category;
 };
 

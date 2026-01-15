@@ -1,5 +1,12 @@
 const Joi = require('joi');
 
+const getCategories = {
+    query: Joi.object().keys({
+        limit: Joi.number().integer().min(1).max(100).default(10),
+        offset: Joi.number().integer().min(0).default(0),
+    }),
+};
+
 const createCategory = {
     body: Joi.object().keys({
         name: Joi.string().required(),
@@ -30,6 +37,7 @@ const deleteCategory = {
 };
 
 module.exports = {
+    getCategories,
     createCategory,
     getCategory,
     updateCategory,

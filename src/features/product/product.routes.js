@@ -72,7 +72,7 @@ const router = express.Router();
 router
     .route('/')
     .post(auth(), validate(productValidation.createProduct), productController.createProduct)
-    .get(productController.getProducts);
+    .get(validate(productValidation.getProducts), productController.getProducts);
 
 /**
  * @swagger

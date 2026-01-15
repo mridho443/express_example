@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../../shared/utils/catchAsync');
 const categoryService = require('./category.service');
+const pick = require('../../shared/utils/pick');
 
 const createCategory = catchAsync(async (req, res) => {
     const category = await categoryService.createCategory(req.body);
@@ -8,8 +9,9 @@ const createCategory = catchAsync(async (req, res) => {
 });
 
 const getCategories = catchAsync(async (req, res) => {
-    const categories = await categoryService.getCategories();
-    res.send(categories);
+    const filter = pick(req.query, ['limit', 'offset']);
+    const result = await categoryService.getCategories(filter);
+    res.send(result);
 });
 
 const getCategory = catchAsync(async (req, res) => {

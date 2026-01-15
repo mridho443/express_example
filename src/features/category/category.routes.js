@@ -58,7 +58,7 @@ const router = express.Router();
 router
     .route('/')
     .post(auth(), validate(categoryValidation.createCategory), categoryController.createCategory)
-    .get(categoryController.getCategories);
+    .get(validate(categoryValidation.getCategories), categoryController.getCategories);
 
 /**
  * @swagger

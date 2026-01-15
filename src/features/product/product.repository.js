@@ -7,8 +7,16 @@ const createProduct = async (productBody) => {
     return product;
 };
 
-const getProducts = () => {
-    return db.select().from(products);
+const getProducts = async (options = {}) => {
+    const { limit = 10, offset = 0 } = options;
+    const results = await db.select().from(products).limit(limit).offset(offset);
+    const [{ count }] = await db.select({ count: db.count() }).from(products);
+    return {
+        results,
+        totalResults: Number(count),
+        limit,
+        offset,
+    };
 };
 
 const getProductById = async (id) => {
@@ -17,7 +25,7 @@ const getProductById = async (id) => {
 };
 
 const updateProductById = async (id, updateBody) => {
-    const [product] = await db.update(products).set(updateBody).where(eq(products.id, id)).returning();
+    const [product] = await db.update(products).set({ ...updateBody, updatedAt: new Date() }).where(eq(products.id, id)).returning();
     return product;
 };
 

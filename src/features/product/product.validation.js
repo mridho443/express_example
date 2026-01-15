@@ -1,5 +1,12 @@
 const Joi = require('joi');
 
+const getProducts = {
+    query: Joi.object().keys({
+        limit: Joi.number().integer().min(1).max(100).default(10),
+        offset: Joi.number().integer().min(0).default(0),
+    }),
+};
+
 const createProduct = {
     body: Joi.object().keys({
         name: Joi.string().required(),
@@ -36,6 +43,7 @@ const deleteProduct = {
 };
 
 module.exports = {
+    getProducts,
     createProduct,
     getProduct,
     updateProduct,

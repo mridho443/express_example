@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../../shared/utils/catchAsync');
 const productService = require('./product.service');
+const pick = require('../../shared/utils/pick');
 
 const createProduct = catchAsync(async (req, res) => {
     const product = await productService.createProduct(req.body);
@@ -8,8 +9,9 @@ const createProduct = catchAsync(async (req, res) => {
 });
 
 const getProducts = catchAsync(async (req, res) => {
-    const products = await productService.getProducts();
-    res.send(products);
+    const filter = pick(req.query, ['limit', 'offset']);
+    const result = await productService.getProducts(filter);
+    res.send(result);
 });
 
 const getProduct = catchAsync(async (req, res) => {

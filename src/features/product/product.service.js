@@ -8,8 +8,8 @@ const createProduct = async (productBody) => {
     return productRepository.createProduct(productBody);
 };
 
-const getProducts = () => {
-    return productRepository.getProducts();
+const getProducts = (filter) => {
+    return productRepository.getProducts(filter);
 };
 
 const getProductById = async (id) => {

@@ -6,8 +6,8 @@ const createCategory = (categoryBody) => {
     return categoryRepository.createCategory(categoryBody);
 };
 
-const getCategories = () => {
-    return categoryRepository.getCategories();
+const getCategories = (filter) => {
+    return categoryRepository.getCategories(filter);
 };
 
 const getCategoryById = async (id) => {
