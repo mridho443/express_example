@@ -1,17 +1,15 @@
 const app = require('./src/app');
-const config = require('./src/shared/config/logger'); // actually we might need env config here, but relying on .env for now
+const config = require('./src/shared/config');
 const logger = require('./src/shared/config/logger');
-require('dotenv').config();
 
 const EXIT_FAILURE = 1;
 
 let server;
 
-const startServer = async () => {
+const startServer = () => {
     try {
-        const port = process.env.PORT || 3000;
-        server = app.listen(port, () => {
-            logger.info(`Listening to port ${port}`);
+        server = app.listen(config.port, () => {
+            logger.info(`Listening to port ${config.port}`);
         });
     } catch (error) {
         logger.error(error);

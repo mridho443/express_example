@@ -2,11 +2,11 @@ const httpStatus = require('http-status');
 const categoryRepository = require('./category.repository');
 const ApiError = require('../../shared/utils/ApiError');
 
-const createCategory = async (categoryBody) => {
+const createCategory = (categoryBody) => {
     return categoryRepository.createCategory(categoryBody);
 };
 
-const getCategories = async () => {
+const getCategories = () => {
     return categoryRepository.getCategories();
 };
 

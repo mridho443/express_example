@@ -1,9 +1,12 @@
 const { drizzle } = require('drizzle-orm/node-postgres');
 const { Pool } = require('pg');
-require('dotenv').config();
+const config = require('./index');
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: config.database.url,
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
 });
 
 const db = drizzle(pool);

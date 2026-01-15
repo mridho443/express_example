@@ -4,25 +4,33 @@ const ApiError = require('../utils/ApiError');
 const { users } = require('../../db/schema');
 const { eq } = require('drizzle-orm');
 const db = require('../config/database');
+const config = require('../config');
 
 const auth = () => async (req, res, next) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) {
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
             throw new ApiError(httpStatus.status.UNAUTHORIZED, 'Please authenticate');
         }
 
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const token = authHeader.split(' ')[1];
+        const payload = jwt.verify(token, config.jwt.secret);
         const [user] = await db.select().from(users).where(eq(users.id, payload.sub));
 
         if (!user) {
             throw new ApiError(httpStatus.status.UNAUTHORIZED, 'User not found');
         }
 
-        req.user = user;
+        const userWithoutPassword = { ...user };
+        delete userWithoutPassword.password;
+        req.user = userWithoutPassword;
         next();
     } catch (error) {
-        next(new ApiError(httpStatus.status.UNAUTHORIZED, 'Please authenticate'));
+        if (error instanceof ApiError) {
+            next(error);
+        } else {
+            next(new ApiError(httpStatus.status.UNAUTHORIZED, 'Please authenticate'));
+        }
     }
 };
 

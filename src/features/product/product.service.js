@@ -8,7 +8,7 @@ const createProduct = async (productBody) => {
     return productRepository.createProduct(productBody);
 };
 
-const getProducts = async () => {
+const getProducts = () => {
     return productRepository.getProducts();
 };
 

@@ -4,35 +4,32 @@ const cors = require('cors');
 const compression = require('compression');
 const httpStatus = require('http-status');
 const errorHandler = require('./shared/middlewares/errorHandler');
-const routes = require('./routes'); // We will create this next
-const ApiError = require('./shared/utils/ApiError'); // We need this util
+const { generalLimiter } = require('./shared/middlewares/rateLimiter');
+const routes = require('./routes');
+const ApiError = require('./shared/utils/ApiError');
+const setupSwagger = require('./shared/config/swagger');
 
 const app = express();
 
-// security HTTP headers
 app.use(helmet());
-
-// parse json request body
+app.use(generalLimiter);
 app.use(express.json());
-
-// parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
-
-// gzip compression
 app.use(compression());
-
-// enable cors
 app.use(cors());
 
-// v1 api routes
+setupSwagger(app);
+
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 app.use('/v1', routes);
 
-// send back a 404 error for any unknown api request
 app.use((req, res, next) => {
     next(new ApiError(httpStatus.status.NOT_FOUND, 'Not found'));
 });
 
-// handle error
 app.use(errorHandler);
 
 module.exports = app;

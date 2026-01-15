@@ -7,8 +7,8 @@ const createProduct = async (productBody) => {
     return product;
 };
 
-const getProducts = async () => {
-    return await db.select().from(products);
+const getProducts = () => {
+    return db.select().from(products);
 };
 
 const getProductById = async (id) => {

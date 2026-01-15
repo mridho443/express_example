@@ -48,14 +48,11 @@ describe('Product Routes', () => {
                 price: 999,
                 categoryId: 99999
             };
-            const res = await request(app)
+            await request(app)
                 .post('/v1/products')
                 .set('Authorization', `Bearer ${accessToken}`)
                 .send(newProduct)
                 .expect(httpStatus.NOT_FOUND);
-            // Note: Service throws NOT_FOUND for category check, but it might be propagated as 404. 
-            // Actually, validation allows integer, service logic checks existence.
-            // Let's check api error propagation. Service throws 404, so we expect 404.
         });
     });
 });

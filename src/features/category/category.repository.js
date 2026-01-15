@@ -7,8 +7,8 @@ const createCategory = async (categoryBody) => {
     return category;
 };
 
-const getCategories = async () => {
-    return await db.select().from(categories);
+const getCategories = () => {
+    return db.select().from(categories);
 };
 
 const getCategoryById = async (id) => {
