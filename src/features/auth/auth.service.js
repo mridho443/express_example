@@ -6,7 +6,7 @@ const ApiError = require('../../shared/utils/ApiError');
 
 const register = async (userBody) => {
     if (await authRepository.getUserByEmail(userBody.email)) {
-        throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+        throw new ApiError(httpStatus.status.BAD_REQUEST, 'Email already taken');
     }
     const hashedPassword = await bcrypt.hash(userBody.password, 8);
     const user = await authRepository.createUser({ ...userBody, password: hashedPassword });
@@ -16,7 +16,7 @@ const register = async (userBody) => {
 const loginUserWithEmailAndPassword = async (email, password) => {
     const user = await authRepository.getUserByEmail(email);
     if (!user || !(await bcrypt.compare(password, user.password))) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+        throw new ApiError(httpStatus.status.UNAUTHORIZED, 'Incorrect email or password');
     }
     return user;
 };

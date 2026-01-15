@@ -5,8 +5,8 @@ const errorHandler = (err, req, res, next) => {
     let { statusCode, message } = err;
 
     if (!statusCode) {
-        statusCode = httpStatus.INTERNAL_SERVER_ERROR;
-        message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR];
+        statusCode = httpStatus.status.INTERNAL_SERVER_ERROR;
+        message = httpStatus.status['500_MESSAGE'];
     }
 
     res.locals.errorMessage = err.message;

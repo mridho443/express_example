@@ -13,7 +13,7 @@ const getCategories = async () => {
 const getCategoryById = async (id) => {
     const category = await categoryRepository.getCategoryById(id);
     if (!category) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'Category not found');
+        throw new ApiError(httpStatus.status.NOT_FOUND, 'Category not found');
     }
     return category;
 };

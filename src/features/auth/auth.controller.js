@@ -5,7 +5,7 @@ const catchAsync = require('../../shared/utils/catchAsync');
 const register = catchAsync(async (req, res) => {
     const user = await authService.register(req.body);
     const tokens = authService.generateTokens(user.id);
-    res.status(httpStatus.CREATED).send({ user, tokens });
+    res.status(httpStatus.status.CREATED).send({ user, tokens });
 });
 
 const login = catchAsync(async (req, res) => {

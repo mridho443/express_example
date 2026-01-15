@@ -4,7 +4,7 @@ const productService = require('./product.service');
 
 const createProduct = catchAsync(async (req, res) => {
     const product = await productService.createProduct(req.body);
-    res.status(httpStatus.CREATED).send(product);
+    res.status(httpStatus.status.CREATED).send(product);
 });
 
 const getProducts = catchAsync(async (req, res) => {
@@ -24,7 +24,7 @@ const updateProduct = catchAsync(async (req, res) => {
 
 const deleteProduct = catchAsync(async (req, res) => {
     await productService.deleteProductById(req.params.productId);
-    res.status(httpStatus.NO_CONTENT).send();
+    res.status(httpStatus.status.NO_CONTENT).send();
 });
 
 module.exports = {

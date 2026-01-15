@@ -15,7 +15,7 @@ const getProducts = async () => {
 const getProductById = async (id) => {
     const product = await productRepository.getProductById(id);
     if (!product) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'Product not found');
+        throw new ApiError(httpStatus.status.NOT_FOUND, 'Product not found');
     }
     return product;
 };

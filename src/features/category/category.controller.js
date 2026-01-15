@@ -4,7 +4,7 @@ const categoryService = require('./category.service');
 
 const createCategory = catchAsync(async (req, res) => {
     const category = await categoryService.createCategory(req.body);
-    res.status(httpStatus.CREATED).send(category);
+    res.status(httpStatus.status.CREATED).send(category);
 });
 
 const getCategories = catchAsync(async (req, res) => {
@@ -24,7 +24,7 @@ const updateCategory = catchAsync(async (req, res) => {
 
 const deleteCategory = catchAsync(async (req, res) => {
     await categoryService.deleteCategoryById(req.params.categoryId);
-    res.status(httpStatus.NO_CONTENT).send();
+    res.status(httpStatus.status.NO_CONTENT).send();
 });
 
 module.exports = {
